@@ -8,9 +8,15 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import AuthController from '#controllers/auth_controller'
 
 router.get('/', async () => {
   return {
     hello: 'world',
   }
+})
+
+router.post('/login', async (ctx) => {
+  const authController = new AuthController()
+  return authController.login(ctx)
 })

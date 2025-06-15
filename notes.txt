@@ -10,3 +10,8 @@ buat seeder sebagai data dummy dengan `node ace make:seeder CategorySeeder`
 ubah kode yang ada di file `database/seeders/category_seeder` untuk menambahkan data dummy di title
 masukan dummy ke db dengan `node ace db:seed` atau  `node ace db:seed category_seeder`
 sekarang data dummy sudah masuk di kolom title di mysql
+buat controller dengan `node ace make:controller AuthController` lalu ubah file tersebut
+buat data dummy dengan seeder untuk user seperti sebelumnya
+dalam `routes.ts`, tambahkan endpoint login
+migration db, lalu jalankan server dengan node ace serve --watch
+cek dalam postman dengan post, JSON & body untuk localhost:3333/login dengan data json email dan password. pastikan outputnya berupa token untuk user
