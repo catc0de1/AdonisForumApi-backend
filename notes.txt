@@ -15,3 +15,7 @@ buat data dummy dengan seeder untuk user seperti sebelumnya
 dalam `routes.ts`, tambahkan endpoint login
 migration db, lalu jalankan server dengan node ace serve --watch
 cek dalam postman dengan post, JSON & body untuk localhost:3333/login dengan data json email dan password. pastikan outputnya berupa token untuk user
+tambahkan validator dengan `node ace make:validator RegisterValidator` dan ubah file tersebut
+ubah file auth_controller untuk menambahkan function login dengan validasi email unik secara manual
+tambahkan endpoint register dan buat menjadi group
+cek register di postman

@@ -1,4 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
+import { registerValidator } from '#validators/register'
 import User from '#models/user'
 import hash from '@adonisjs/core/services/hash'
 
@@ -25,5 +26,29 @@ export default class AuthController {
     // } catch {
     //   return response.unauthorized({ message: 'Invalid credentials' })
     // }
+  }
+
+  async register({ request, response }: HttpContext) {
+    const payload = await request.validate({ schema: registerValidator })
+
+    const exists = await User.findBy('email', payload.email)
+    if (exists) {
+      return response.conflict({ message: 'Email already exists' })
+    }
+
+    const user = await User.create({
+      fullName: payload.fullName,
+      email: payload.email,
+      password: payload.password,
+    })
+
+    return response.created({
+      message: 'User registered successfully',
+      user: {
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+      },
+    })
   }
 }

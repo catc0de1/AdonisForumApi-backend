@@ -16,7 +16,16 @@ router.get('/', async () => {
   }
 })
 
-router.post('/login', async (ctx) => {
-  const authController = new AuthController()
-  return authController.login(ctx)
-})
+router
+  .group(() => {
+    router.post('/login', [AuthController, 'login'])
+    router.post('/register', [AuthController, 'register'])
+  })
+  .prefix('/auth')
+
+// router.post('/login', async (ctx) => {
+//   const authController = new AuthController()
+//   return authController.login(ctx)
+// })
+
+// router.post('/register', [AuthController, 'register'])
