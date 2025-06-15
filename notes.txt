@@ -19,3 +19,6 @@ tambahkan validator dengan `node ace make:validator RegisterValidator` dan ubah 
 ubah file auth_controller untuk menambahkan function login dengan validasi email unik secara manual
 tambahkan endpoint register dan buat menjadi group
 cek register di postman
+buat model baru dengan `node ace make:model threads` serta ubah model&schema nya lalu tambahkan relasi antara user dan category
+untuk seterusnya, command yg membuat file akan menggunakan node ace make. seperti membuat validator bernama thread dan controller dengan nama threads_controllers.
+ubah file router.ts, threads_controllers dan thread validator supaya dapat menerapkan method post untuk /threads dengan syarat token atau auth

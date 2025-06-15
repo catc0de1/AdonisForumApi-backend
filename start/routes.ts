@@ -9,6 +9,8 @@
 
 import router from '@adonisjs/core/services/router'
 import AuthController from '#controllers/auth_controller'
+import ThreadController from '#controllers/threads_controller'
+import { middleware } from './kernel.js'
 
 router.get('/', async () => {
   return {
@@ -29,3 +31,5 @@ router
 // })
 
 // router.post('/register', [AuthController, 'register'])
+
+router.post('/threads', [ThreadController, 'store']).use(middleware.auth())
