@@ -1,0 +1,12 @@
+instalasi `npm init adonisjs@latest forum-api -- db=mysql --git-init`
+pilih API Starter Kit, auth nya pilih access_tokens
+gunakan mysql dari laragon, xampp, atau yang lain dan pastikan nama database dan password sama seperti di .env
+cek koneksi database dengan `node ace migration:run`
+tambahkan model dengan `node ace make:model Category -m`, -m untuk auto migration
+ubah kode yang ada di file `app/models/category` dan `config/database/migration`
+lalu jalankan ace untuk migration sesuai perubahan config dengan `node ace migration:run`
+cek mysql, pasti muncul title dalam table categories
+buat seeder sebagai data dummy dengan `node ace make:seeder CategorySeeder`
+ubah kode yang ada di file `database/seeders/category_seeder` untuk menambahkan data dummy di title
+masukan dummy ke db dengan `node ace db:seed` atau  `node ace db:seed category_seeder`
+sekarang data dummy sudah masuk di kolom title di mysql
