@@ -32,4 +32,6 @@ router
 
 // router.post('/register', [AuthController, 'register'])
 
+router.get('/threads', [ThreadController, 'index'])
 router.post('/threads', [ThreadController, 'store']).use(middleware.auth())
+router.get('/threads/:id', [ThreadController, 'show'])
