@@ -56,4 +56,24 @@ export default class ThreadsController {
       })
     }
   }
+
+  async update({ params, request, response }: HttpContext) {
+    try {
+      const thread = await Thread.findOrFail(params.id)
+      const validateData = await request.validateUsing(threadValidator)
+
+      await thread.merge(validateData).save()
+
+      await thread?.load('category')
+      await thread?.load('user')
+
+      return response.status(200).json({
+        data: thread,
+      })
+    } catch (error) {
+      return response.status(404).json({
+        message: error.message,
+      })
+    }
+  }
 }
