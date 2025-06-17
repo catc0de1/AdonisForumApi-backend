@@ -6,6 +6,7 @@ import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import Thread from './thread.js'
+import Reply from './reply.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -35,4 +36,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @hasMany(() => Thread)
   public threads: HasMany<typeof Thread>
+
+  @hasMany(() => Reply)
+  public replies: HasMany<typeof Reply>
 }

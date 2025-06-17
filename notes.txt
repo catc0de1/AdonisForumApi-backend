@@ -26,3 +26,4 @@ buat function baru dalam threads_controller seperti index dan show untuk menampi
 buat function baru dalam threads_controller untuk mengupdate threads dengan method put di router
 buat function baru dalam threads_controller untuk menghapus threads dengan method delete di router
 ubah file thread_middleware untuk menambahkan permission sebelum update atau delete thread
+buat model baru dengan `node ace make:model Reply -m` lalu buat kolom content untuk reply beserta relasi nya dengan model lain. lalu jalankan `node ace migration:run`
