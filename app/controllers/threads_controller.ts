@@ -57,10 +57,17 @@ export default class ThreadsController {
     }
   }
 
-  async update({ params, request, response }: HttpContext) {
+  async update({ params, auth, request, response }: HttpContext) {
     try {
+      const user = await auth.user
       const thread = await Thread.findOrFail(params.id)
       const validateData = await request.validateUsing(threadValidator)
+
+      if (user?.id !== thread.userId) {
+        return response.status(401).json({
+          message: 'You are not authorized to update this thread',
+        })
+      }
 
       await thread.merge(validateData).save()
 
@@ -77,9 +84,17 @@ export default class ThreadsController {
     }
   }
 
-  async destroy({ params, response }: HttpContext) {
+  async destroy({ params, auth, response }: HttpContext) {
     try {
+      const user = await auth.user
       const thread = await Thread.findOrFail(params.id)
+
+      if (user?.id !== thread.userId) {
+        return response.status(401).json({
+          message: 'You are not authorized to delete this thread',
+        })
+      }
+
       await thread.delete()
       return response.status(200).json({
         message: 'Thread deleted successfully',
