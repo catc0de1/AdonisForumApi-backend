@@ -36,3 +36,4 @@ router.get('/threads', [ThreadController, 'index'])
 router.post('/threads', [ThreadController, 'store']).use(middleware.auth())
 router.put('/threads/:id', [ThreadController, 'update']).use(middleware.auth()) // bisa menggunakan patch untuk update sebagian
 router.get('/threads/:id', [ThreadController, 'show'])
+router.delete('/threads/:id', [ThreadController, 'destroy']).use(middleware.auth())

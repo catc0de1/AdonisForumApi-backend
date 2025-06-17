@@ -24,3 +24,4 @@ untuk seterusnya, command yg membuat file akan menggunakan node ace make. sepert
 ubah file router.ts, threads_controllers dan thread validator supaya dapat menerapkan method post untuk /threads dengan syarat token atau auth
 buat function baru dalam threads_controller seperti index dan show untuk menampilkan threads dengan method get di router
 buat function baru dalam threads_controller untuk mengupdate threads dengan method put di router
+buat function baru dalam threads_controller untuk menghapus threads dengan method delete di router
