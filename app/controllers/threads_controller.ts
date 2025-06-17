@@ -46,6 +46,7 @@ export default class ThreadsController {
         .where('id', params.id)
         .preload('user')
         .preload('category')
+        .preload('replies', (replyQuery) => replyQuery.preload('user'))
         .firstOrFail()
       return response.status(200).json({
         data: trhead,

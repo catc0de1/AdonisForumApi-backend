@@ -10,6 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import AuthController from '#controllers/auth_controller'
 import ThreadController from '#controllers/threads_controller'
+import RepliesController from '#controllers/replies_controller'
 import { middleware } from './kernel.js'
 
 router.get('/', async () => {
@@ -37,3 +38,5 @@ router.post('/threads', [ThreadController, 'store']).use(middleware.auth())
 router.put('/threads/:id', [ThreadController, 'update']).use(middleware.auth()) // bisa menggunakan patch untuk update sebagian
 router.get('/threads/:id', [ThreadController, 'show'])
 router.delete('/threads/:id', [ThreadController, 'destroy']).use(middleware.auth())
+
+router.post('/threads/:thread_id/replies', [RepliesController, 'store']).use(middleware.auth())
