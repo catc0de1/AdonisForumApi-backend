@@ -33,10 +33,22 @@ router
 
 // router.post('/register', [AuthController, 'register'])
 
-router.get('/threads', [ThreadController, 'index'])
-router.post('/threads', [ThreadController, 'store']).use(middleware.auth())
-router.put('/threads/:id', [ThreadController, 'update']).use(middleware.auth()) // bisa menggunakan patch untuk update sebagian
-router.get('/threads/:id', [ThreadController, 'show'])
-router.delete('/threads/:id', [ThreadController, 'destroy']).use(middleware.auth())
+// cara mendefinisikan route secara manual
+// router.get('/threads', [ThreadController, 'index'])
+// router.post('/threads', [ThreadController, 'store']).use(middleware.auth())
+// router.put('/threads/:id', [ThreadController, 'update']).use(middleware.auth()) // bisa menggunakan patch untuk update sebagian
+// router.get('/threads/:id', [ThreadController, 'show'])
+// router.delete('/threads/:id', [ThreadController, 'destroy']).use(middleware.auth())
 
-router.post('/threads/:thread_id/replies', [RepliesController, 'store']).use(middleware.auth())
+// router.post('/threads/:thread_id/replies', [RepliesController, 'store']).use(middleware.auth())
+
+// cara mendefinisikan route dengan routes.resource
+router
+  .resource('threads', ThreadController)
+  .apiOnly()
+  .use(['store', 'update', 'destroy'], middleware.auth())
+
+router
+  .resource('threads.replies', RepliesController)
+  .only(['store'])
+  .use(['store'], middleware.auth())

@@ -42,3 +42,6 @@ tambahkan filtering data secara dinamis dengan query parameter di threads_contro
 cek di postman seperti waktu paginate, contoh `/threads?user_id=1&category_id=2`. Bisa salah satu query param saja.
 buat validator baru dengan nama SortThreadValidator dan tambahkan schema untuk sort threads via param
 cek di postman dengan query yang tertera di `/validator/sort_threads` seperti key sort_by dan order. Bisa digabungkan dengan parameter lain. Default nya adalah id dengan desc
+`node ace list:routes` untuk mengecek routes yang ada
+refactoring routes.ts dengan routes.resource lalu cek lagi `node ace list:routes`. pastikan routes & methods nya sama
+cek lagi semua routes & methods di postman
