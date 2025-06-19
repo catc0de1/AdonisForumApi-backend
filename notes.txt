@@ -40,3 +40,5 @@ terapkan method paginate di threads_controller untuk menampilkan beberapa thread
 cek di postman dengan `/threads?page=index` dimana index adalah halaman itu sendiri. Jika 1 halaman hanya 10 thread, maka hanya terdapat 3 halaman
 tambahkan filtering data secara dinamis dengan query parameter di threads_controller. mencari thread berdasarkan id category atau user
 cek di postman seperti waktu paginate, contoh `/threads?user_id=1&category_id=2`. Bisa salah satu query param saja.
+buat validator baru dengan nama SortThreadValidator dan tambahkan schema untuk sort threads via param
+cek di postman dengan query yang tertera di `/validator/sort_threads` seperti key sort_by dan order. Bisa digabungkan dengan parameter lain. Default nya adalah id dengan desc

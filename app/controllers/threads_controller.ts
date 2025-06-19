@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Thread from '#models/thread'
 import { threadValidator } from '#validators/thread'
+import { sortThreadValidator } from '#validators/sort_thread'
 
 export default class ThreadsController {
   async index({ request, response }: HttpContext) {
@@ -8,9 +9,15 @@ export default class ThreadsController {
       const page = request.input('page', 1)
       const userId = request.input('user_id')
       const categoryId = request.input('category_id')
+
+      const sortValidated = await request.validateUsing(sortThreadValidator)
+      const sortBy = sortValidated.sort_by || 'id'
+      const order = sortValidated.order || 'desc'
+
       const threads = await Thread.query()
         .if(userId, (query) => query.where('user_id', userId))
         .if(categoryId, (query) => query.where('category_id', categoryId))
+        .orderBy(sortBy, order)
         .preload('user')
         .preload('category')
         .paginate(page, 10)
