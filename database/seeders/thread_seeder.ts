@@ -5,6 +5,6 @@ export default class extends BaseSeeder {
   async run() {
     // Write your database queries inside the run method
 
-    await ThreadFactory.createMany(30) // Create 10 threads using the factory
+    await ThreadFactory.createMany(30)
   }
 }

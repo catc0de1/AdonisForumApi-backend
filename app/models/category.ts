@@ -8,7 +8,7 @@ export default class Category extends BaseModel {
   declare id: number
 
   @column()
-  public title: string
+  declare title: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -17,5 +17,5 @@ export default class Category extends BaseModel {
   declare updatedAt: DateTime
 
   @hasMany(() => Thread)
-  public threads: HasMany<typeof Thread>
+  declare threads: HasMany<typeof Thread>
 }

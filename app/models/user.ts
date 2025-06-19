@@ -35,8 +35,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
   static accessTokens = DbAccessTokensProvider.forModel(User)
 
   @hasMany(() => Thread)
-  public threads: HasMany<typeof Thread>
+  declare threads: HasMany<typeof Thread>
 
   @hasMany(() => Reply)
-  public replies: HasMany<typeof Reply>
+  declare replies: HasMany<typeof Reply>
 }

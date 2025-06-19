@@ -9,27 +9,22 @@ export default class AuthController {
 
     const user = await User.findBy('email', email)
     if (!user) {
-      return response.unauthorized({ message: 'Invalid credentials, email' })
+      return response.unauthorized({ message: 'Invalid credentials' })
     }
 
     const isValid = await hash.verify(user.password, password)
     if (!isValid) {
-      return response.unauthorized({ message: 'Invalid credentials, password' })
+      return response.unauthorized({ message: 'Invalid credentials' })
     }
 
-    const token = await User.accessTokens.create(user, 'api')
+    const token = await User.accessTokens.create(user, ['*'], {
+      expiresIn: '7 days',
+    })
     return { token }
-    // try {
-    //   const user = await auth.use('api').attempt(email, password)
-    //   const token = await user.accessTokens.create('api')
-    //   return { token }
-    // } catch {
-    //   return response.unauthorized({ message: 'Invalid credentials' })
-    // }
   }
 
   async register({ request, response }: HttpContext) {
-    const payload = await request.validate({ schema: registerValidator })
+    const payload = await request.validateUsing(registerValidator)
 
     const exists = await User.findBy('email', payload.email)
     if (exists) {
@@ -42,6 +37,10 @@ export default class AuthController {
       password: payload.password,
     })
 
+    const token = await User.accessTokens.create(user, ['*'], {
+      expiresIn: '7 days',
+    })
+
     return response.created({
       message: 'User registered successfully',
       user: {
@@ -49,6 +48,7 @@ export default class AuthController {
         fullName: user.fullName,
         email: user.email,
       },
+      token,
     })
   }
 }

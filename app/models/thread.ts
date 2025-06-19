@@ -10,16 +10,16 @@ export default class Thread extends BaseModel {
   declare id: number
 
   @column()
-  public userId: number
+  declare userId: number
 
   @column()
-  public categoryId: number
+  declare categoryId: number
 
   @column()
-  public title: string
+  declare title: string
 
   @column()
-  public content: string
+  declare content: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -28,11 +28,11 @@ export default class Thread extends BaseModel {
   declare updatedAt: DateTime
 
   @belongsTo(() => User)
-  public user: BelongsTo<typeof User>
+  declare user: BelongsTo<typeof User>
 
   @belongsTo(() => Category)
-  public category: BelongsTo<typeof Category>
+  declare category: BelongsTo<typeof Category>
 
   @hasMany(() => Reply)
-  public replies: HasMany<typeof Reply>
+  declare replies: HasMany<typeof Reply>
 }

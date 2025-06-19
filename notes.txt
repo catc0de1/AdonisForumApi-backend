@@ -1,51 +1,98 @@
-instalasi `npm init adonisjs@latest forum-api -- db=mysql --git-init`
+Catatan :
+Jika ingin memahami langkah per langkah, maka disarankan untuk melihat per commit.
+Notes ini diupdate per commit walaupun kata-kata nya sedikit lebih berantakan.
+
+Langkah-langkah:
+1. instalasi adonis
+jalankan `npm init adonisjs@latest forum-api -- db=mysql --git-init` di terminal pada directory yang diinginkan
 pilih API Starter Kit, auth nya pilih access_tokens
-gunakan mysql dari laragon, xampp, atau yang lain dan pastikan nama database dan password sama seperti di .env
+
+2. koneksi database 
+gunakan mysql dari laragon, xampp, atau yang lain dan pastikan nama database dan password sama seperti di `.env`
 cek koneksi database dengan `node ace migration:run`
+
+3. menambahkan model
 tambahkan model dengan `node ace make:model Category -m`, -m untuk auto migration
 ubah kode yang ada di file `app/models/category` dan `config/database/migration`
 lalu jalankan ace untuk migration sesuai perubahan config dengan `node ace migration:run`
 cek mysql, pasti muncul title dalam table categories
+
+4. menambahkan seeder
 buat seeder sebagai data dummy dengan `node ace make:seeder CategorySeeder`
 ubah kode yang ada di file `database/seeders/category_seeder` untuk menambahkan data dummy di title
-masukan dummy ke db dengan `node ace db:seed` atau  `node ace db:seed category_seeder`
+masukan dummy ke db dengan `node ace db:seed` atau `node ace db:seed category_seeder`
 sekarang data dummy sudah masuk di kolom title di mysql
+
+5. menambahkan controller
 buat controller dengan `node ace make:controller AuthController` lalu ubah file tersebut
-buat data dummy dengan seeder untuk user seperti sebelumnya
+buat data dummy dengan seeder untuk user seperti sebelumnya.
 dalam `routes.ts`, tambahkan endpoint login
+
+6. menjalankan server
 migration db, lalu jalankan server dengan node ace serve --watch
-cek dalam postman dengan post, JSON & body untuk localhost:3333/login dengan data json email dan password. pastikan outputnya berupa token untuk user
+cek dalam postman dengan post, JSON & body untuk `localhost:3333/login` dengan data json email dan password. 
+pastikan outputnya berupa token untuk user
+
+7. menambahkan validator
 tambahkan validator dengan `node ace make:validator RegisterValidator` dan ubah file tersebut
 ubah file auth_controller untuk menambahkan function login dengan validasi email unik secara manual
 tambahkan endpoint register dan buat menjadi group
-cek register di postman
+cek fitur register di postman, pastikan user baru masuk di db
+
+8. model baru untuk threads
 buat model baru dengan `node ace make:model threads` serta ubah model&schema nya lalu tambahkan relasi antara user dan category
+
 untuk seterusnya, command yg membuat file akan menggunakan node ace make. seperti membuat validator bernama thread dan controller dengan nama threads_controllers.
+
+9. menambahkan endpoint api baru
 ubah file router.ts, threads_controllers dan thread validator supaya dapat menerapkan method post untuk /threads dengan syarat token atau auth
+
+10. menambahkan function baru
 buat function baru dalam threads_controller seperti index dan show untuk menampilkan threads dengan method get di router
 buat function baru dalam threads_controller untuk mengupdate threads dengan method put di router
 buat function baru dalam threads_controller untuk menghapus threads dengan method delete di router
+
+11. konfigurasi middleware
 ubah file thread_middleware untuk menambahkan permission sebelum update atau delete thread
-buat model baru dengan `node ace make:model Reply -m` lalu buat kolom content untuk reply beserta relasi nya dengan model lain. lalu jalankan `node ace migration:run`
+
+12. model baru untuk reply
+buat model baru dengan `node ace make:model Reply -m` lalu buat kolom content untuk reply beserta relasi nya dengan model lain.
+lalu jalankan `node ace migration:run`
+
+13. controller & validator baru untuk reply
 buat controller dan validator untuk reply dengan node ace
 tambahkan function untuk menambahkan reply di /threads/:thread_id/replies dengan method post di controller beserta validator nya
 ubah function untuk show thread agar dapat menambahkan data replies di threads_controller
+
+14. seeder lanjutan
 buat seeder untuk thread
 tambahkan beberapa data dummy pada user_seeder
 buat factory untuk membuat banyak seed dengan `node ace make:factory Thread` dengan program seperti yang tertera
 buat index utama agar urutan migrasi dari 'category->user->thread' dengan `node ace make:seeder MainSeeder/IndexSeeder` dan urutkan urutannya
 tambahkan path seed di file `config/database` agar merujuk ke index_seeder 
 hapus dan isi ulang data dalam db dengan seeder baru melalui `node ace migration:refresh --seed`
+
+15. menerapkan method paginate
 terapkan method paginate di threads_controller untuk menampilkan beberapa thread per halaman
 cek di postman dengan `/threads?page=index` dimana index adalah halaman itu sendiri. Jika 1 halaman hanya 10 thread, maka hanya terdapat 3 halaman
+
+16. menerapkan filtering threads
 tambahkan filtering data secara dinamis dengan query parameter di threads_controller. mencari thread berdasarkan id category atau user
 cek di postman seperti waktu paginate, contoh `/threads?user_id=1&category_id=2`. Bisa salah satu query param saja.
+
+17. menerapkan sorting threads
 buat validator baru dengan nama SortThreadValidator dan tambahkan schema untuk sort threads via param
 cek di postman dengan query yang tertera di `/validator/sort_threads` seperti key sort_by dan order. Bisa digabungkan dengan parameter lain. Default nya adalah id dengan desc
+
+18. refactor routes.ts
 `node ace list:routes` untuk mengecek routes yang ada
 refactoring routes.ts dengan routes.resource lalu cek lagi `node ace list:routes`. pastikan routes & methods nya sama
 cek lagi semua routes & methods di postman
+
+19. membuat error handler sendiri
 buat error handler dengan `node ace make:exception UnauthorizedException` lalu ubah file itu
 uabh file threads_controller agar menerapkan error handler yang barusan dibuat
 cek error nya di postman
+
+
 selamat! belajar adonis sudah cukup sampai sini!!, seterusnya dari ini hanya refactoring, atau performance

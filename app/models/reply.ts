@@ -9,13 +9,13 @@ export default class Reply extends BaseModel {
   declare id: number
 
   @column()
-  public userId: number
+  declare userId: number
 
   @column()
-  public threadId: number
+  declare threadId: number
 
   @column()
-  public content: string
+  declare content: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -24,8 +24,8 @@ export default class Reply extends BaseModel {
   declare updatedAt: DateTime
 
   @belongsTo(() => User)
-  public user: BelongsTo<typeof User>
+  declare user: BelongsTo<typeof User>
 
   @belongsTo(() => Thread)
-  public thread: BelongsTo<typeof Thread>
+  declare thread: BelongsTo<typeof Thread>
 }

@@ -2,8 +2,8 @@ import vine from '@vinejs/vine'
 
 export const threadValidator = vine.compile(
   vine.object({
-    title: vine.string().maxLength(255).minLength(3),
-    content: vine.string().minLength(10),
+    title: vine.string().minLength(3).maxLength(255).trim(),
+    content: vine.string().minLength(10).trim(),
     categoryId: vine.number(),
   })
 )
