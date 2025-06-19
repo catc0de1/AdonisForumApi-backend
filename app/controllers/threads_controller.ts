@@ -6,7 +6,14 @@ export default class ThreadsController {
   async index({ request, response }: HttpContext) {
     try {
       const page = request.input('page', 1)
-      const threads = await Thread.query().preload('user').preload('category').paginate(page, 10)
+      const userId = request.input('user_id')
+      const categoryId = request.input('category_id')
+      const threads = await Thread.query()
+        .if(userId, (query) => query.where('user_id', userId))
+        .if(categoryId, (query) => query.where('category_id', categoryId))
+        .preload('user')
+        .preload('category')
+        .paginate(page, 10)
       return response.status(200).json({
         data: threads,
       })
