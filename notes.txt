@@ -36,3 +36,5 @@ buat factory untuk membuat banyak seed dengan `node ace make:factory Thread` den
 buat index utama agar urutan migrasi dari 'category->user->thread' dengan `node ace make:seeder MainSeeder/IndexSeeder` dan urutkan urutannya
 tambahkan path seed di file `config/database` agar merujuk ke index_seeder 
 hapus dan isi ulang data dalam db dengan seeder baru melalui `node ace migration:refresh --seed`
+terapkan method paginate di threads_controller untuk menampilkan beberapa thread per halaman
+cek di postman dengan `/threads?page=index` dimana index adalah halaman itu sendiri. Jika 1 halaman hanya 10 thread, maka hanya terdapat 3 halaman

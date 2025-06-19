@@ -3,9 +3,10 @@ import Thread from '#models/thread'
 import { threadValidator } from '#validators/thread'
 
 export default class ThreadsController {
-  async index({ response }: HttpContext) {
+  async index({ request, response }: HttpContext) {
     try {
-      const threads = await Thread.query().preload('user').preload('category')
+      const page = request.input('page', 1)
+      const threads = await Thread.query().preload('user').preload('category').paginate(page, 10)
       return response.status(200).json({
         data: threads,
       })
