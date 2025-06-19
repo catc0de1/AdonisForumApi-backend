@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Thread from '#models/thread'
 import { threadValidator } from '#validators/thread'
 import { sortThreadValidator } from '#validators/sort_thread'
+import UnauthorizedException from '#exceptions/unauthorized_exception'
 
 export default class ThreadsController {
   async index({ request, response }: HttpContext) {
@@ -77,6 +78,11 @@ export default class ThreadsController {
     try {
       const user = await auth.user
       const thread = await Thread.findOrFail(params.id)
+
+      if (user?.id !== thread.userId) {
+        throw new UnauthorizedException('Unauthorized', 403)
+      }
+
       const validateData = await request.validateUsing(threadValidator)
 
       if (user?.id !== thread.userId) {
@@ -94,9 +100,15 @@ export default class ThreadsController {
         data: thread,
       })
     } catch (error) {
-      return response.status(404).json({
-        message: error.message,
-      })
+      if (error.name === 'UnauthorizedException') {
+        return response.status(error.status).json({
+          message: error.message,
+        })
+      } else if (error.code === 'E_ROW_NOT_FOUND') {
+        return response.status(404).json({
+          message: 'Thread not found',
+        })
+      }
     }
   }
 
@@ -106,9 +118,7 @@ export default class ThreadsController {
       const thread = await Thread.findOrFail(params.id)
 
       if (user?.id !== thread.userId) {
-        return response.status(401).json({
-          message: 'You are not authorized to delete this thread',
-        })
+        throw new UnauthorizedException('Unauthorized', 403)
       }
 
       await thread.delete()
@@ -116,9 +126,15 @@ export default class ThreadsController {
         message: 'Thread deleted successfully',
       })
     } catch (error) {
-      return response.status(500).json({
-        message: error.message,
-      })
+      if (error.name === 'UnauthorizedException') {
+        return response.status(error.status).json({
+          message: error.message,
+        })
+      } else if (error.code === 'E_ROW_NOT_FOUND') {
+        return response.status(404).json({
+          message: 'Thread not found',
+        })
+      }
     }
   }
 }

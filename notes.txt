@@ -45,3 +45,7 @@ cek di postman dengan query yang tertera di `/validator/sort_threads` seperti ke
 `node ace list:routes` untuk mengecek routes yang ada
 refactoring routes.ts dengan routes.resource lalu cek lagi `node ace list:routes`. pastikan routes & methods nya sama
 cek lagi semua routes & methods di postman
+buat error handler dengan `node ace make:exception UnauthorizedException` lalu ubah file itu
+uabh file threads_controller agar menerapkan error handler yang barusan dibuat
+cek error nya di postman
+selamat! belajar adonis sudah cukup sampai sini!!, seterusnya dari ini hanya refactoring, atau performance
