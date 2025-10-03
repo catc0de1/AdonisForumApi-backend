@@ -1,5 +1,5 @@
-# Forum RESTful API Backend – AdonisJS + MySQL
-Ini adalah proyek backend REST API untuk aplikasi forum diskusi, dibangun menggunakan AdonisJS versi modular terbaru dan MySQL. API ini menangani proses autentikasi berbasis token, pengelolaan thread (posting), serta membalas thread.
+# Kita Rehat Sejenak – AdonisJS + MySQL
+"Kita Rehat Sejenak" adalah proyek backend REST API untuk aplikasi forum diskusi dengan topik santai, dibangun menggunakan AdonisJS versi modular terbaru dan MySQL. API ini menangani proses autentikasi berbasis token, pengelolaan thread (posting), serta membalas thread.
 
 ---
 
@@ -85,8 +85,8 @@ Authorization: Bearer <token>
 ## Catatan
 - Proyek ini menggunakan AdonisJS v6 (modular) dan struktur file dapat berbeda dari versi sebelumnya.
 - Seeder tersedia untuk mengisi data dummy thread dan user.
-- Terdapat tutorial langkah per langkah di `./notes.txt` walaupun kata-kata nya masih terbilang tidak rapi.
-- Untuk menggunakan tutorial di `./notes.txt`, disarankan untuk kunjungi daftar commit [disini](https://github.com/CatC0de1/AdonisForumApi-backend/commits?author=CatC0de1), terdapat update per commit sesuai dengan notes nya.
+
+---
 
 ## Lisensi
-Proyek ini bebas digunakan untuk keperluan edukasi dan pengembangan pribadi oleh Iyan Zuli Armanda.
+Proyek ini berada di atas [MIT License](https://github.com/catc0de1/AdonisForumApi-backend?tab=MIT-1-ov-file).
